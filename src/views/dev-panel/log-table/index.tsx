@@ -16,7 +16,7 @@ const TableContainer = styled.div`
     padding-top: 10px;
 `;
 
-export function DevTable(): ReactElement {
+export function LogTable(): ReactElement {
     const logs = useSelector(selectLogs);
     const [filterText, setFilterText] = useState("");
     const [flattenArgs, setFlattenArgs] = useState(false);

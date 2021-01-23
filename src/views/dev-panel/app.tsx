@@ -11,8 +11,8 @@ import {
     Switch,
 } from "react-router-dom";
 
-import { DevTable } from "./dev-table";
 import { FooterContent } from "./footer";
+import { LogTable } from "./log-table";
 
 const { Content, Footer, Sider } = Layout;
 
@@ -56,7 +56,7 @@ export function App(): ReactElement {
                                 <Redirect to="/logs" />
                             </Route>
                             <Route exact path="/logs">
-                                <DevTable />
+                                <LogTable />
                             </Route>
                         </Switch>
                     </Content>
