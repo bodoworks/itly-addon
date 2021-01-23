@@ -1,0 +1,98 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true,
+    "webextensions": true
+  },
+  "globals": {
+    "VERSION": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "plugins": ["import","jest", "lodash", "react"],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": ["error"],
+    "@typescript-eslint/explicit-module-boundary-types": ["error"],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "function",
+        // PascalCase is needed to handle react function components
+        "format": ["camelCase", "PascalCase"]
+      },
+
+      {
+        "selector": "variable",
+        // PascalCase is needed to handle the case we assign function components to a variable
+        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+      },
+
+      {
+        "selector": "variable",
+        "modifiers": ["destructured"],
+        "format": null
+      },
+
+      {
+        "selector": "parameter",
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow"
+      },
+
+      {
+        "selector": "memberLike",
+        "modifiers": ["private"],
+        "format": ["camelCase"],
+        "leadingUnderscore": "require"
+      },
+
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "curly": "error",
+    "eqeqeq": "error",
+    "import/no-cycle": "error",
+    "import/no-default-export": "error",
+    "import/no-self-import": "error",
+    "import/no-unresolved": "error",
+    "lodash/import-scope": "error",
+    "no-return-await": "error",
+    "no-unused-vars": "error",
+    "object-shorthand": "error",
+    "prefer-template": "error",
+    "react/destructuring-assignment": "error",
+    "react/prefer-stateless-function": "error",
+    "spaced-comment": "error",
+
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "react/prop-types": "off",
+
+    // not necessary since react 17
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

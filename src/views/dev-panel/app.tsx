@@ -1,0 +1,77 @@
+import "antd/dist/antd.css";
+
+import { PieChartOutlined } from "@ant-design/icons";
+import { Layout, Menu } from "antd";
+import React, { ReactElement } from "react";
+import {
+    Link,
+    Redirect,
+    Route,
+    MemoryRouter as Router,
+    Switch,
+} from "react-router-dom";
+
+import { DevTable } from "./dev-table";
+import { FooterContent } from "./footer";
+
+const { Content, Footer, Sider } = Layout;
+
+export function App(): ReactElement {
+    return (
+        <Router>
+            <Layout>
+                <Sider
+                    style={{
+                        overflow: "auto",
+                        height: "100vh",
+                        position: "fixed",
+                        left: 0,
+                    }}
+                    collapsed={true}
+                >
+                    <Menu defaultSelectedKeys={["logs"]} mode="inline">
+                        <Menu.Item key="logs">
+                            <PieChartOutlined />
+                            <span>Logs</span>
+                            <Link to="/logs" />
+                        </Menu.Item>
+                    </Menu>
+                </Sider>
+                <Layout
+                    style={{
+                        minHeight: "100vh",
+                        minWidth: "600px",
+                        marginLeft: "80px",
+                    }}
+                >
+                    <Content
+                        style={{
+                            margin: "10px 10px 0px 10px",
+                            padding: "10px",
+                            background: "#fff",
+                        }}
+                    >
+                        <Switch>
+                            <Route exact path="/">
+                                <Redirect to="/logs" />
+                            </Route>
+                            <Route exact path="/logs">
+                                <DevTable />
+                            </Route>
+                        </Switch>
+                    </Content>
+
+                    <Footer
+                        style={{
+                            textAlign: "center",
+                            height: "40px",
+                            padding: "10px",
+                        }}
+                    >
+                        <FooterContent />
+                    </Footer>
+                </Layout>
+            </Layout>
+        </Router>
+    );
+}

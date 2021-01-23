@@ -1,0 +1,28 @@
+{
+    "name": "Itly Addon",
+    "description": "Cleaning out the bugs from our logs",
+    "version": "UPDATED BY WEBPACK",
+    "manifest_version": 2,
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "devtools_page": "dev-tools.html",
+    "background": {
+        "scripts": ["bundle_background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["bundle_content.js"]
+        }
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "options_page": "options.html",
+    "permissions": [
+        "webRequest",
+        "activeTab",
+        "<all_urls>"
+    ]
+}
