@@ -6,9 +6,7 @@ interface Props {
     onClick: () => void;
 }
 
-export function ClearLogsButton(props: Props): ReactElement {
-    const { onClick } = props;
-
+export function ClearLogsButton({ onClick }: Props): ReactElement {
     return (
         <Tooltip title="Clear" placement="bottom">
             <Button icon={<DeleteOutlined />} onClick={onClick} />

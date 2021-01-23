@@ -13,8 +13,10 @@ interface Props {
     onFlattenArgsChange: (checked: boolean) => void;
 }
 
-export function Toolbar(props: Props): ReactElement {
-    const { onFilterEventChange, onFlattenArgsChange } = props;
+export function Toolbar({
+    onFilterEventChange,
+    onFlattenArgsChange,
+}: Props): ReactElement {
     const dispatch = useDispatch();
 
     function dispatchClearLogs(): void {
