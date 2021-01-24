@@ -12,7 +12,7 @@ export function DownloadLogsButton(): ReactElement {
     const logs = useSelector(selectLogs);
 
     function onClick(): void {
-        const fields = ["tstamp", "user_id", "team_id", "event", "args"];
+        const fields = ["tstamp", "event", "properties"];
 
         try {
             const datetimestr = format(new Date(), "yyyyMMddhhmmss");
