@@ -64,8 +64,8 @@ export function LogTable(): ReactElement {
             },
         },
         {
-            title: "Args",
-            dataIndex: "args",
+            title: "Properties",
+            dataIndex: "properties",
             width: "35%",
             render(args): ReactElement {
                 const newArgs = flattenArgs ? dot.dot(args ?? {}) : args;

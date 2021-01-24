@@ -1,10 +1,11 @@
+import { nanoid } from "nanoid";
 import { createStore } from "redux";
 import { wrapStore } from "webext-redux";
 import { browser } from "webextension-polyfill-ts";
 
-import { getLogs } from "../../common";
 import { addLogs } from "../../redux/actions";
 import { reducers } from "../../redux/reducers";
+import { Log } from "../../types";
 
 const store = createStore(reducers);
 
@@ -12,15 +13,15 @@ wrapStore(store);
 
 browser.webRequest.onBeforeRequest.addListener(
     (details) => {
-        const logs = getLogs(details?.requestBody?.formData?.logs);
+        const log = JSON.parse(
+            atob(details?.requestBody?.formData?.data as string)
+        ) as Log;
+        log.tstamp = Date.now();
+        log._guid = nanoid();
 
-        if (!logs.length) {
-            return;
-        }
-
-        store.dispatch(addLogs(logs));
+        store.dispatch(addLogs([log]));
     },
-    { urls: ["*://*"] },
+    { urls: ["*://api-js.mixpanel.com/track/*"] },
     ["requestBody"]
 );
 
