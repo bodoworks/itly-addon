@@ -1,5 +1,6 @@
 export interface Log {
     tstamp: number;
+    domain: string;
     event: string | number;
     properties: Record<string, unknown> | null;
 

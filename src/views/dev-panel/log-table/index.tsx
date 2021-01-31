@@ -58,6 +58,17 @@ export function LogTable({ logType }: Props): ReactElement {
             },
         },
         {
+            title: "Domain",
+            dataIndex: "domain",
+            width: "7%",
+            render(domain): ReactElement {
+                return <span>{domain}</span>;
+            },
+            sorter(a, b): number {
+                return String(a.domain).localeCompare(String(b.domain));
+            },
+        },
+        {
             title: "Event",
             dataIndex: "event",
             width: "10%",

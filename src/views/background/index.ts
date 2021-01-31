@@ -34,11 +34,19 @@ function getJsonBody(
 
 browser.webRequest.onBeforeRequest.addListener(
     (details) => {
-        const log = JSON.parse(
+        const mixPanelLog = JSON.parse(
             atob(details?.requestBody?.formData?.data as string)
-        ) as Log;
-        log.tstamp = Date.now();
-        log._guid = nanoid();
+        );
+
+        console.log(details);
+        const log: Log = {
+            _guid: nanoid(),
+            tstamp: Date.now(),
+            domain: details.initiator ?? "",
+            event: mixPanelLog.event,
+            properties: mixPanelLog.properties,
+        };
+
         store.dispatch(addLogs(LogType.MIXPANEL, [log]));
     },
     { urls: ["*://api-js.mixpanel.com/track/*"] },
@@ -51,8 +59,9 @@ browser.webRequest.onBeforeRequest.addListener(
     (details) => {
         const rawlog = getJsonBody(details);
         const log: Log = {
-            tstamp: Date.now(),
             _guid: nanoid(),
+            tstamp: Date.now(),
+            domain: details.initiator ?? "",
             event: rawlog.name as string,
             properties: rawlog.properties as Record<string, unknown>,
         };
