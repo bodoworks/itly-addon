@@ -9,8 +9,12 @@ import { useSelector } from "react-redux";
 import { selectLogs } from "../../../../redux/selectors";
 import { LogType } from "../../../../redux/types";
 
-export function DownloadLogsButton(): ReactElement {
-    const logs = useSelector(selectLogs(LogType.MIXPANEL));
+interface Props {
+    logType: LogType;
+}
+
+export function DownloadLogsButton({ logType }: Props): ReactElement {
+    const logs = useSelector(selectLogs(logType));
 
     function onClick(): void {
         const fields = ["tstamp", "event", "properties"];

@@ -17,8 +17,12 @@ const TableContainer = styled.div`
     padding-top: 10px;
 `;
 
-export function LogTable(): ReactElement {
-    const logs = useSelector(selectLogs(LogType.MIXPANEL));
+interface Props {
+    logType: LogType;
+}
+
+export function LogTable({ logType }: Props): ReactElement {
+    const logs = useSelector(selectLogs(logType));
     const [filterText, setFilterText] = useState("");
     const [flattenArgs, setFlattenArgs] = useState(false);
 
@@ -91,6 +95,7 @@ export function LogTable(): ReactElement {
     return (
         <div>
             <Toolbar
+                logType={logType}
                 onFilterEventChange={onFilterEventChange}
                 onFlattenArgsChange={onFlattenArgsChange}
             />

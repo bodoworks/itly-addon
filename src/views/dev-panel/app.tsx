@@ -34,10 +34,16 @@ export function App(): ReactElement {
                         defaultSelectedKeys={[LogType.MIXPANEL]}
                         mode="inline"
                     >
+                        <Menu.Item key={LogType.SEGMENT}>
+                            <PieChartOutlined />
+                            <span>Segment</span>
+                            <Link to={`/logs/${LogType.SEGMENT}`} />
+                        </Menu.Item>
+
                         <Menu.Item key={LogType.MIXPANEL}>
                             <PieChartOutlined />
                             <span>Mixpanel</span>
-                            <Link to="/logs" />
+                            <Link to={`/logs/${LogType.MIXPANEL}`} />
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -57,10 +63,15 @@ export function App(): ReactElement {
                     >
                         <Switch>
                             <Route exact path="/">
-                                <Redirect to="/logs" />
+                                <Redirect to={`/logs/${LogType.MIXPANEL}`} />
                             </Route>
-                            <Route exact path="/logs">
-                                <LogTable />
+
+                            <Route exact path={`/logs/${LogType.SEGMENT}`}>
+                                <LogTable logType={LogType.SEGMENT} />
+                            </Route>
+
+                            <Route exact path={`/logs/${LogType.MIXPANEL}`}>
+                                <LogTable logType={LogType.MIXPANEL} />
                             </Route>
                         </Switch>
                     </Content>

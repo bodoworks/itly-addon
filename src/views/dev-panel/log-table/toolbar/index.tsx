@@ -10,23 +10,25 @@ import { FilterEventInput } from "./filter-event-input";
 import { FlattenArgsToggle } from "./flatten-args-toggle";
 
 interface Props {
+    logType: LogType;
     onFilterEventChange: (value: string) => void;
     onFlattenArgsChange: (checked: boolean) => void;
 }
 
 export function Toolbar({
+    logType,
     onFilterEventChange,
     onFlattenArgsChange,
 }: Props): ReactElement {
     const dispatch = useDispatch();
 
     function dispatchClearLogs(): void {
-        dispatch(clearLogs(LogType.MIXPANEL));
+        dispatch(clearLogs(logType));
     }
 
     return (
         <Space>
-            <DownloadLogsButton />
+            <DownloadLogsButton logType={logType} />
 
             <ClearLogsButton onClick={dispatchClearLogs} />
 
