@@ -1,7 +1,6 @@
 import { Table } from "antd";
 import { ColumnProps } from "antd/es/table";
 import { format } from "date-fns";
-import dot from "dot-object";
 import isEmpty from "lodash/isEmpty";
 import React, { ReactElement, useState } from "react";
 import ReactJson from "react-json-view";
@@ -24,14 +23,9 @@ interface Props {
 export function LogTable({ logType }: Props): ReactElement {
     const logs = useSelector(selectLogs(logType));
     const [filterText, setFilterText] = useState("");
-    const [flattenArgs, setFlattenArgs] = useState(false);
 
     function onFilterEventChange(value: string): void {
         setFilterText(value);
-    }
-
-    function onFlattenArgsChange(checked: boolean): void {
-        setFlattenArgs(checked);
     }
 
     function getFilteredLogs(): Log[] {
@@ -84,15 +78,13 @@ export function LogTable({ logType }: Props): ReactElement {
             dataIndex: "properties",
             width: "35%",
             render(args): ReactElement {
-                const newArgs = flattenArgs ? dot.dot(args ?? {}) : args;
-
-                if (isEmpty(newArgs)) {
+                if (isEmpty(args)) {
                     return <span />;
                 }
 
                 return (
                     <ReactJson
-                        src={newArgs}
+                        src={args}
                         theme="rjv-default"
                         displayDataTypes={false}
                         collapsed
@@ -108,7 +100,6 @@ export function LogTable({ logType }: Props): ReactElement {
             <Toolbar
                 logType={logType}
                 onFilterEventChange={onFilterEventChange}
-                onFlattenArgsChange={onFlattenArgsChange}
             />
 
             <TableContainer>

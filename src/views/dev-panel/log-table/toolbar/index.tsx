@@ -7,19 +7,13 @@ import { LogType } from "../../../../redux/types";
 import { ClearLogsButton } from "./clear-logs-button";
 import { DownloadLogsButton } from "./download-logs-button";
 import { FilterEventInput } from "./filter-event-input";
-import { FlattenArgsToggle } from "./flatten-args-toggle";
 
 interface Props {
     logType: LogType;
     onFilterEventChange: (value: string) => void;
-    onFlattenArgsChange: (checked: boolean) => void;
 }
 
-export function Toolbar({
-    logType,
-    onFilterEventChange,
-    onFlattenArgsChange,
-}: Props): ReactElement {
+export function Toolbar({ logType, onFilterEventChange }: Props): ReactElement {
     const dispatch = useDispatch();
 
     function dispatchClearLogs(): void {
@@ -29,8 +23,6 @@ export function Toolbar({
     return (
         <Space>
             <FilterEventInput onChange={onFilterEventChange} />
-
-            <FlattenArgsToggle onChange={onFlattenArgsChange} />
 
             <DownloadLogsButton logType={logType} />
 
