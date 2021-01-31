@@ -5,6 +5,7 @@ import { browser } from "webextension-polyfill-ts";
 
 import { addLogs } from "../../redux/actions";
 import { reducers } from "../../redux/reducers";
+import { LogType } from "../../redux/types";
 import { Log } from "../../types";
 
 const store = createStore(reducers);
@@ -18,8 +19,7 @@ browser.webRequest.onBeforeRequest.addListener(
         ) as Log;
         log.tstamp = Date.now();
         log._guid = nanoid();
-
-        store.dispatch(addLogs([log]));
+        store.dispatch(addLogs(LogType.MIXPANEL, [log]));
     },
     { urls: ["*://api-js.mixpanel.com/track/*"] },
     ["requestBody"]

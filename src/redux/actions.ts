@@ -1,15 +1,21 @@
 import { Log } from "../types";
-import { ADD_LOGS, CLEAR_LOGS, EventActionTypes } from "./types";
+import { ADD_LOGS, CLEAR_LOGS, EventActionTypes, LogType } from "./types";
 
-export function addLogs(newEvents: Log[]): EventActionTypes {
+export function addLogs(logType: LogType, logs: Log[]): EventActionTypes {
     return {
         type: ADD_LOGS,
-        payload: newEvents,
+        payload: {
+            logType,
+            logs,
+        },
     };
 }
 
-export function clearLogs(): EventActionTypes {
+export function clearLogs(logType: LogType): EventActionTypes {
     return {
         type: CLEAR_LOGS,
+        payload: {
+            logType,
+        },
     };
 }

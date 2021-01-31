@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 import { useDispatch } from "react-redux";
 
 import { clearLogs } from "../../../../redux/actions";
+import { LogType } from "../../../../redux/types";
 import { ClearLogsButton } from "./clear-logs-button";
 import { DownloadLogsButton } from "./download-logs-button";
 import { FilterEventInput } from "./filter-event-input";
@@ -20,7 +21,7 @@ export function Toolbar({
     const dispatch = useDispatch();
 
     function dispatchClearLogs(): void {
-        dispatch(clearLogs());
+        dispatch(clearLogs(LogType.MIXPANEL));
     }
 
     return (

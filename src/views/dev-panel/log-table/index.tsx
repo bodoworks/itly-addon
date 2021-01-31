@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { selectLogs } from "../../../redux/selectors";
+import { LogType } from "../../../redux/types";
 import { Log } from "../../../types";
 import { Toolbar } from "./toolbar";
 
@@ -17,7 +18,7 @@ const TableContainer = styled.div`
 `;
 
 export function LogTable(): ReactElement {
-    const logs = useSelector(selectLogs);
+    const logs = useSelector(selectLogs(LogType.MIXPANEL));
     const [filterText, setFilterText] = useState("");
     const [flattenArgs, setFlattenArgs] = useState(false);
 

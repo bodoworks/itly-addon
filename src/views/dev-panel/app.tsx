@@ -11,6 +11,7 @@ import {
     Switch,
 } from "react-router-dom";
 
+import { LogType } from "../../redux/types";
 import { FooterContent } from "./footer";
 import { LogTable } from "./log-table";
 
@@ -29,10 +30,13 @@ export function App(): ReactElement {
                     }}
                     collapsed={true}
                 >
-                    <Menu defaultSelectedKeys={["logs"]} mode="inline">
-                        <Menu.Item key="logs">
+                    <Menu
+                        defaultSelectedKeys={[LogType.MIXPANEL]}
+                        mode="inline"
+                    >
+                        <Menu.Item key={LogType.MIXPANEL}>
                             <PieChartOutlined />
-                            <span>Logs</span>
+                            <span>Mixpanel</span>
                             <Link to="/logs" />
                         </Menu.Item>
                     </Menu>
