@@ -12,11 +12,10 @@ import {
 } from "react-router-dom";
 
 import { LogType } from "../../redux/types";
-import { FooterContent } from "./footer";
 import { LogTable } from "./log-table";
 
 const { ErrorBoundary } = Alert;
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 export function App(): ReactElement {
     return (
@@ -92,16 +91,6 @@ export function App(): ReactElement {
                             </Switch>
                         </ErrorBoundary>
                     </Content>
-
-                    <Footer
-                        style={{
-                            textAlign: "center",
-                            height: "40px",
-                            padding: "10px",
-                        }}
-                    >
-                        <FooterContent />
-                    </Footer>
                 </Layout>
             </Layout>
         </Router>
