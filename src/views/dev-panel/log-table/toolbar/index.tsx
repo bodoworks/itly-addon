@@ -28,13 +28,13 @@ export function Toolbar({
 
     return (
         <Space>
-            <DownloadLogsButton logType={logType} />
-
-            <ClearLogsButton onClick={dispatchClearLogs} />
-
             <FilterEventInput onChange={onFilterEventChange} />
 
             <FlattenArgsToggle onChange={onFlattenArgsChange} />
+
+            <DownloadLogsButton logType={logType} />
+
+            <ClearLogsButton onClick={dispatchClearLogs} />
         </Space>
     );
 }

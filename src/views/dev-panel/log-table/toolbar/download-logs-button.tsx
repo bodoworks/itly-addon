@@ -21,7 +21,7 @@ export function DownloadLogsButton({ logType }: Props): ReactElement {
 
         try {
             const datetimestr = format(new Date(), "yyyyMMddhhmmss");
-            const filename = `events-download-${datetimestr}.csv`;
+            const filename = `${logType}-events-download-${datetimestr}.csv`;
             const csv = parse(logs, { fields });
             const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
             saveAs(blob, filename);

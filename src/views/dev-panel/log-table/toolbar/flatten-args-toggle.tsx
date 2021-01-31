@@ -20,7 +20,7 @@ export function FlattenArgsToggle({ onChange }: Props): ReactElement {
         <ToggleContainer>
             <Space>
                 <Switch onChange={onSwitchChange} />
-                <span>Flatten args</span>
+                <span>Flatten Properties</span>
             </Space>
         </ToggleContainer>
     );

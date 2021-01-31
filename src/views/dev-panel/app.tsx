@@ -1,7 +1,7 @@
 import "antd/dist/antd.css";
 
-import { PieChartOutlined } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import Icon from "@ant-design/icons";
+import { Alert, Layout, Menu } from "antd";
 import React, { ReactElement } from "react";
 import {
     Link,
@@ -15,6 +15,7 @@ import { LogType } from "../../redux/types";
 import { FooterContent } from "./footer";
 import { LogTable } from "./log-table";
 
+const { ErrorBoundary } = Alert;
 const { Content, Footer, Sider } = Layout;
 
 export function App(): ReactElement {
@@ -30,18 +31,32 @@ export function App(): ReactElement {
                     }}
                     collapsed={true}
                 >
-                    <Menu
-                        defaultSelectedKeys={[LogType.MIXPANEL]}
-                        mode="inline"
-                    >
+                    <Menu defaultSelectedKeys={[LogType.SEGMENT]} mode="inline">
                         <Menu.Item key={LogType.SEGMENT}>
-                            <PieChartOutlined />
+                            <Icon
+                                component={(): ReactElement => (
+                                    <img
+                                        width="100%"
+                                        src="/segment.png"
+                                        alt="segment"
+                                    />
+                                )}
+                            />
+
                             <span>Segment</span>
                             <Link to={`/logs/${LogType.SEGMENT}`} />
                         </Menu.Item>
 
                         <Menu.Item key={LogType.MIXPANEL}>
-                            <PieChartOutlined />
+                            <Icon
+                                component={(): ReactElement => (
+                                    <img
+                                        width="100%"
+                                        src="/mixpanel.png"
+                                        alt="segment"
+                                    />
+                                )}
+                            />
                             <span>Mixpanel</span>
                             <Link to={`/logs/${LogType.MIXPANEL}`} />
                         </Menu.Item>
@@ -61,19 +76,21 @@ export function App(): ReactElement {
                             background: "#fff",
                         }}
                     >
-                        <Switch>
-                            <Route exact path="/">
-                                <Redirect to={`/logs/${LogType.MIXPANEL}`} />
-                            </Route>
+                        <ErrorBoundary>
+                            <Switch>
+                                <Route exact path="/">
+                                    <Redirect to={`/logs/${LogType.SEGMENT}`} />
+                                </Route>
 
-                            <Route exact path={`/logs/${LogType.SEGMENT}`}>
-                                <LogTable logType={LogType.SEGMENT} />
-                            </Route>
+                                <Route exact path={`/logs/${LogType.SEGMENT}`}>
+                                    <LogTable logType={LogType.SEGMENT} />
+                                </Route>
 
-                            <Route exact path={`/logs/${LogType.MIXPANEL}`}>
-                                <LogTable logType={LogType.MIXPANEL} />
-                            </Route>
-                        </Switch>
+                                <Route exact path={`/logs/${LogType.MIXPANEL}`}>
+                                    <LogTable logType={LogType.MIXPANEL} />
+                                </Route>
+                            </Switch>
+                        </ErrorBoundary>
                     </Content>
 
                     <Footer
