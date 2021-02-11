@@ -14,18 +14,14 @@ const WEBPACK_MODES = {
     production: "production",
 };
 
-function updateManifest(buffer: Buffer): string {
-    const manifest = JSON.parse(buffer.toString());
-    manifest.version = PACKAGE_VERSION;
-    return JSON.stringify(manifest, null, 2);
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 module.exports = (env: any, argv: any): Configuration => {
     const mode = argv.mode || WEBPACK_MODES.production;
     const isProd = mode === WEBPACK_MODES.production;
 
     return {
+        devtool: isProd ? "source-map" : "inline-source-map",
+
         entry: {
             background: "./src/views/background/index.ts",
             content: "./src/views/content/index.ts",
@@ -33,10 +29,7 @@ module.exports = (env: any, argv: any): Configuration => {
             "dev-tools": "./src/views/dev-tools/index.ts",
             options: "./src/views/options/index.tsx",
         },
-        output: {
-            filename: "bundle_[name].js",
-            path: path.resolve(__dirname, "dist"),
-        },
+
         module: {
             rules: [
                 {
@@ -59,9 +52,12 @@ module.exports = (env: any, argv: any): Configuration => {
                 },
             ],
         },
-        resolve: {
-            extensions: [".ts", ".tsx", ".js", ".jsx"],
+
+        output: {
+            filename: "bundle_[name].js",
+            path: path.resolve(__dirname, "dist"),
         },
+
         plugins: [
             new CleanWebpackPlugin({
                 // on rebuild do not delete stale assets as these include
@@ -85,7 +81,9 @@ module.exports = (env: any, argv: any): Configuration => {
                             path: string
                         ): string | Buffer {
                             if (path.includes("manifest.json")) {
-                                return updateManifest(content);
+                                const manifest = JSON.parse(content.toString());
+                                manifest.version = PACKAGE_VERSION;
+                                return JSON.stringify(manifest, null, 2);
                             }
 
                             return content;
@@ -115,6 +113,9 @@ module.exports = (env: any, argv: any): Configuration => {
                 filename: `itly-addon-${PACKAGE_VERSION}.zip`,
             }),
         ],
-        devtool: isProd ? "source-map" : "inline-source-map",
+
+        resolve: {
+            extensions: [".js", ".jsx", ".ts", ".tsx"],
+        },
     };
 };
