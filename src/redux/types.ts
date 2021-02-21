@@ -3,6 +3,7 @@ import { Log } from "../types";
 export enum LogType {
     MIXPANEL = "MIXPANEL",
     SEGMENT = "SEGMENT",
+    AMPLITUDE = "AMPLITUDE",
 }
 
 export const ADD_LOGS = "ADD_LOGS";

@@ -44,7 +44,11 @@ export function LogTable({ logType }: Props): ReactElement {
             dataIndex: "tstamp",
             width: "7%",
             render(tstamp): ReactElement {
-                return <span>{format(tstamp, "HH:mm:ss.SSS")}</span>;
+                try {
+                    return <span>{format(tstamp, "HH:mm:ss.SSS")}</span>;
+                } catch {
+                    return <span>Error: {tstamp}</span>;
+                }
             },
             defaultSortOrder: "descend",
             sorter(a, b): number {

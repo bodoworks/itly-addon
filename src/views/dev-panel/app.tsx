@@ -52,12 +52,26 @@ export function App(): ReactElement {
                                     <img
                                         width="100%"
                                         src="/mixpanel.png"
-                                        alt="segment"
+                                        alt="mixpanel"
                                     />
                                 )}
                             />
                             <span>Mixpanel</span>
                             <Link to={`/logs/${LogType.MIXPANEL}`} />
+                        </Menu.Item>
+
+                        <Menu.Item key={LogType.AMPLITUDE}>
+                            <Icon
+                                component={(): ReactElement => (
+                                    <img
+                                        width="100%"
+                                        src="/mixpanel.png"
+                                        alt="amplitude"
+                                    />
+                                )}
+                            />
+                            <span>Amplitude</span>
+                            <Link to={`/logs/${LogType.AMPLITUDE}`} />
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -87,6 +101,13 @@ export function App(): ReactElement {
 
                                 <Route exact path={`/logs/${LogType.MIXPANEL}`}>
                                     <LogTable logType={LogType.MIXPANEL} />
+                                </Route>
+
+                                <Route
+                                    exact
+                                    path={`/logs/${LogType.AMPLITUDE}`}
+                                >
+                                    <LogTable logType={LogType.AMPLITUDE} />
                                 </Route>
                             </Switch>
                         </ErrorBoundary>

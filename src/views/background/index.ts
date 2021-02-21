@@ -14,9 +14,14 @@ const store = createStore(reducers);
 
 wrapStore(store);
 
-function getJsonBody(
-    details: OnBeforeRequestDetailsType
-): Record<string, unknown> {
+type RawLog = Record<string, unknown>;
+type AmplitudeLog = Record<string, unknown>;
+
+function getJsonBody(details: OnBeforeRequestDetailsType): RawLog {
+    if (details?.requestBody?.formData) {
+        return details?.requestBody?.formData;
+    }
+
     const data = details?.requestBody?.raw
         ?.map((data) => {
             return String.fromCharCode.apply(
@@ -38,11 +43,10 @@ browser.webRequest.onBeforeRequest.addListener(
             atob(details?.requestBody?.formData?.data as string)
         );
 
-        console.log(details);
         const log: Log = {
             _guid: nanoid(),
             tstamp: Date.now(),
-            domain: details.initiator ?? "",
+            domain: details.initiator as string,
             event: mixPanelLog.event,
             properties: mixPanelLog.properties,
         };
@@ -57,18 +61,51 @@ browser.webRequest.onBeforeRequest.addListener(
 
 browser.webRequest.onBeforeRequest.addListener(
     (details) => {
-        const rawlog = getJsonBody(details);
+        const rawLog = getJsonBody(details);
         const log: Log = {
             _guid: nanoid(),
             tstamp: Date.now(),
-            domain: details.initiator ?? "",
-            event: rawlog.name as string,
-            properties: rawlog.properties as Record<string, unknown>,
+            domain: details.initiator as string,
+            event: (rawLog.name as string) ?? (rawLog.event as string),
+            properties: rawLog.properties as Record<string, unknown>,
         };
 
         store.dispatch(addLogs(LogType.SEGMENT, [log]));
     },
-    { urls: ["*://in.au1.segmentapis.com/v1/p"] },
+    {
+        urls: [
+            "*://api.segment.io/v1/i",
+            "*://api.segment.io/v1/g",
+            "*://api.segment.io/v1/p",
+            "*://api.segment.io/v1/t",
+        ],
+    },
+    ["requestBody"]
+);
+
+// Amplitude
+browser.webRequest.onBeforeRequest.addListener(
+    (details) => {
+        const formData = getJsonBody(details);
+        const rawLogs = JSON.parse(formData.e as string) as AmplitudeLog[];
+
+        const logs = rawLogs.map(
+            (rawLog): Log => {
+                return {
+                    _guid: nanoid(),
+                    tstamp: rawLog.timestamp as number,
+                    domain: details.initiator as string,
+                    event: rawLog.event_type as string,
+                    properties: rawLog,
+                };
+            }
+        );
+
+        store.dispatch(addLogs(LogType.AMPLITUDE, logs));
+    },
+    {
+        urls: ["https://api.amplitude.com/"],
+    },
     ["requestBody"]
 );
 
