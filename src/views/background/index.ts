@@ -6,7 +6,7 @@ import { WebRequest, browser } from "webextension-polyfill-ts";
 import { addLogs } from "../../redux/actions";
 import { reducers } from "../../redux/reducers";
 import { LogType } from "../../redux/types";
-import { Log } from "../../types";
+import { Log, SegmentType } from "../../types";
 
 import OnBeforeRequestDetailsType = WebRequest.OnBeforeRequestDetailsType;
 
@@ -68,6 +68,7 @@ browser.webRequest.onBeforeRequest.addListener(
             domain: details.initiator as string,
             event: (rawLog.name as string) ?? (rawLog.event as string),
             properties: rawLog.properties as Record<string, unknown>,
+            segmentType: rawLog.type as SegmentType,
         };
 
         store.dispatch(addLogs(LogType.SEGMENT, [log]));

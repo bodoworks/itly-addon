@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 import { selectLogs } from "../../../redux/selectors";
 import { LogType } from "../../../redux/types";
-import { Log } from "../../../types";
+import { Log, SegmentType } from "../../../types";
 import { Toolbar } from "./toolbar";
 
 const TableContainer = styled.div`
@@ -42,8 +42,8 @@ export function LogTable({ logType }: Props): ReactElement {
         {
             title: "Time",
             dataIndex: "tstamp",
-            width: "7%",
-            render(tstamp): ReactElement {
+            width: "5%",
+            render(tstamp: Log["tstamp"]): ReactElement {
                 try {
                     return <span>{format(tstamp, "HH:mm:ss.SSS")}</span>;
                 } catch {
@@ -51,7 +51,7 @@ export function LogTable({ logType }: Props): ReactElement {
                 }
             },
             defaultSortOrder: "descend",
-            sorter(a, b): number {
+            sorter(a: Log, b: Log): number {
                 return a.tstamp - b.tstamp;
             },
         },
@@ -59,21 +59,33 @@ export function LogTable({ logType }: Props): ReactElement {
             title: "Domain",
             dataIndex: "domain",
             width: "7%",
-            render(domain): ReactElement {
+            render(domain: Log["domain"]): ReactElement {
                 return <span>{domain}</span>;
             },
-            sorter(a, b): number {
+            sorter(a: Log, b: Log): number {
                 return String(a.domain).localeCompare(String(b.domain));
             },
         },
+        ...(logType === LogType.SEGMENT
+            ? [
+                  {
+                      title: "Type",
+                      dataIndex: "segmentType",
+                      width: "7%",
+                      render(segmentType: SegmentType): ReactElement {
+                          return <span>{segmentType}</span>;
+                      },
+                  },
+              ]
+            : []),
         {
             title: "Event",
             dataIndex: "event",
             width: "10%",
-            render(event): ReactElement {
+            render(event: Log["event"]): ReactElement {
                 return <span>{event}</span>;
             },
-            sorter(a, b): number {
+            sorter(a: Log, b: Log): number {
                 return String(a.event).localeCompare(String(b.event));
             },
         },
@@ -81,8 +93,8 @@ export function LogTable({ logType }: Props): ReactElement {
             title: "Properties",
             dataIndex: "properties",
             width: "35%",
-            render(args): ReactElement {
-                if (isEmpty(args)) {
+            render(args: Log["properties"]): ReactElement {
+                if (!args || isEmpty(args)) {
                     return <span />;
                 }
 
