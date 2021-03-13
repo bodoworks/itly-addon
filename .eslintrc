@@ -20,8 +20,7 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jest/recommended",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
   "plugins": ["import","jest", "lodash", "react"],
   "rules": {

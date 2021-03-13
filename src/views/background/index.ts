@@ -8,8 +8,6 @@ import { reducers } from "../../redux/reducers";
 import { LogType } from "../../redux/types";
 import { Log, SegmentType } from "../../types";
 
-import OnBeforeRequestDetailsType = WebRequest.OnBeforeRequestDetailsType;
-
 const store = createStore(reducers);
 
 wrapStore(store);
@@ -17,7 +15,7 @@ wrapStore(store);
 type RawLog = Record<string, unknown>;
 type AmplitudeLog = Record<string, unknown>;
 
-function getJsonBody(details: OnBeforeRequestDetailsType): RawLog {
+function getJsonBody(details: WebRequest.OnBeforeRequestDetailsType): RawLog {
     if (details?.requestBody?.formData) {
         return details?.requestBody?.formData;
     }
