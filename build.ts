@@ -16,8 +16,6 @@ const args = yargs(process.argv)
         description: "Watch mode",
     }).argv;
 
-const mode = args.production ? "production" : "development";
-
 // clean folder
 fs.emptyDirSync("./dist");
 
@@ -27,7 +25,7 @@ fs.copySync("./public", "./dist");
 manifestJson.version = PACKAGE_VERSION;
 fs.writeFileSync("./dist/manifest.json", JSON.stringify(manifestJson, null, 2));
 
-const ENV = JSON.stringify(mode);
+const mode = args.production ? "production" : "development";
 const IS_PROD = mode === "production";
 
 async function buildEntryPoint(
@@ -37,7 +35,7 @@ async function buildEntryPoint(
     return build({
         bundle: true,
         define: {
-            "process.env.NODE_ENV": ENV,
+            "process.env.NODE_ENV": JSON.stringify(mode),
             VERSION: JSON.stringify(PACKAGE_VERSION),
         },
         entryPoints: [entryPoint],
@@ -45,9 +43,8 @@ async function buildEntryPoint(
         loader: {
             ".ts": "ts",
         },
-        minify: IS_PROD, // only minify prod so that JSX doesn't get obfuscated when using react profiler
+        minify: IS_PROD,
         outfile: `./dist/${outfile}`,
-        plugins: [],
         publicPath: "/",
         sourcemap: true,
         target: "es2020",
