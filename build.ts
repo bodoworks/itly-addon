@@ -6,6 +6,8 @@ import yargs from "yargs";
 import { version as PACKAGE_VERSION } from "./package.json";
 import manifestJson from "./public/manifest.json";
 
+const OUTPUT_FOLDER = "./dist";
+
 const args = yargs(process.argv)
     .option("production", {
         type: "boolean",
@@ -17,13 +19,16 @@ const args = yargs(process.argv)
     }).argv;
 
 // clean folder
-fs.emptyDirSync("./dist");
+fs.emptyDirSync(OUTPUT_FOLDER);
 
 // copy over assets
-fs.copySync("./public", "./dist");
+fs.copySync("./public", OUTPUT_FOLDER);
 
 manifestJson.version = PACKAGE_VERSION;
-fs.writeFileSync("./dist/manifest.json", JSON.stringify(manifestJson, null, 2));
+fs.writeFileSync(
+    `${OUTPUT_FOLDER}/manifest.json`,
+    JSON.stringify(manifestJson, null, 2)
+);
 
 const mode = args.production ? "production" : "development";
 const IS_PROD = mode === "production";
@@ -44,7 +49,7 @@ async function buildEntryPoint(
             ".ts": "ts",
         },
         minify: IS_PROD,
-        outfile: `./dist/${outfile}`,
+        outfile: `${OUTPUT_FOLDER}/${outfile}`,
         publicPath: "/",
         sourcemap: true,
         target: "es2020",
@@ -69,8 +74,8 @@ async function buildEntryPoint(
 
     await builds;
 
-    const zipFilename = `./dist/itly-addon-${PACKAGE_VERSION}.zip`;
+    const zipFilename = `${OUTPUT_FOLDER}/itly-addon-${PACKAGE_VERSION}.zip`;
     const zip = new AdmZip();
-    zip.addLocalFolder("./dist");
+    zip.addLocalFolder(OUTPUT_FOLDER);
     zip.writeZip(zipFilename);
 })();
