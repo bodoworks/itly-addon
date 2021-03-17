@@ -1,6 +1,6 @@
 {
     "name": "Itly Addon",
-    "description": "Update this",
+    "description": "Iteratively's premier analytics addon",
     "version": "UPDATED BY ESBUILD",
     "manifest_version": 2,
     "icons": {
@@ -23,6 +23,7 @@
     "permissions": [
         "webRequest",
         "activeTab",
+        "storage",
         "<all_urls>"
     ]
 }

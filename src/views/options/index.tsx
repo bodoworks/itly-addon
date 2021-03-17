@@ -1,8 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { Store } from "webext-redux";
 
+import { App } from "./app";
+
+const queryClient = new QueryClient();
 const store = new Store();
 
 // wait for the store to connect to the background page
@@ -11,7 +15,9 @@ store.ready().then((): void => {
     // so you can use tools like `react-redux` no problem!
     ReactDOM.render(
         <Provider store={store}>
-            <div>Nothing to see here</div>
+            <QueryClientProvider client={queryClient}>
+                <App />
+            </QueryClientProvider>
         </Provider>,
         document.getElementById("app")
     );
