@@ -8,7 +8,7 @@ export function addLogs(
     logs: Log[],
     tabId: number
 ): EventActionTypes {
-    browser.tabs.sendMessage(tabId as number, {
+    browser.tabs.sendMessage(tabId, {
         type: MESSAGE_NEW_LOGS,
         logs,
     });
