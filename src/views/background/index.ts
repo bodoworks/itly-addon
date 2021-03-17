@@ -49,7 +49,7 @@ browser.webRequest.onBeforeRequest.addListener(
             properties: mixPanelLog.properties,
         };
 
-        store.dispatch(addLogs(LogType.MIXPANEL, [log]));
+        store.dispatch(addLogs(LogType.MIXPANEL, [log], details.tabId));
     },
     { urls: ["*://api-js.mixpanel.com/track/*"] },
     ["requestBody"]
@@ -69,7 +69,7 @@ browser.webRequest.onBeforeRequest.addListener(
             segmentType: rawLog.type as SegmentType,
         };
 
-        store.dispatch(addLogs(LogType.SEGMENT, [log]));
+        store.dispatch(addLogs(LogType.SEGMENT, [log], details.tabId));
     },
     {
         urls: [
@@ -100,7 +100,7 @@ browser.webRequest.onBeforeRequest.addListener(
             }
         );
 
-        store.dispatch(addLogs(LogType.AMPLITUDE, logs));
+        store.dispatch(addLogs(LogType.AMPLITUDE, logs, details.tabId));
     },
     {
         urls: ["https://api.amplitude.com/"],

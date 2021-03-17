@@ -10,3 +10,5 @@ export interface Log {
     // Metadata that we add
     _guid: string; // Our own internal key
 }
+
+export const MESSAGE_NEW_LOGS = "NEW_LOGS";

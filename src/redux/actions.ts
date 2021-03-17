@@ -1,7 +1,18 @@
-import { Log } from "../types";
+import { browser } from "webextension-polyfill-ts";
+
+import { Log, MESSAGE_NEW_LOGS } from "../types";
 import { ADD_LOGS, CLEAR_LOGS, EventActionTypes, LogType } from "./types";
 
-export function addLogs(logType: LogType, logs: Log[]): EventActionTypes {
+export function addLogs(
+    logType: LogType,
+    logs: Log[],
+    tabId: number
+): EventActionTypes {
+    browser.tabs.sendMessage(tabId as number, {
+        type: MESSAGE_NEW_LOGS,
+        logs,
+    });
+
     return {
         type: ADD_LOGS,
         payload: {

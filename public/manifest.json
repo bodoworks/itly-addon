@@ -15,7 +15,8 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["bundle_content.js"]
+            "js": ["bundle_content.js"],
+            "css": ["bundle_content.css"]
         }
     ],
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",

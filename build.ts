@@ -60,7 +60,7 @@ async function buildEntryPoint(
 (async (): Promise<void> => {
     const entryPoints = {
         background: "./src/views/background/index.ts",
-        content: "./src/views/content/index.ts",
+        content: "./src/views/content/index.tsx",
         "dev-panel": "./src/views/dev-panel/index.tsx",
         "dev-tools": "./src/views/dev-tools/index.ts",
         options: "./src/views/options/index.tsx",
