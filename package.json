@@ -14,7 +14,7 @@
     "test": "jest --passWithNoTests",
     "tsc": "tsc --noEmit"
   },
-  "author": "John Jiang",
+  "author": "Iteratively",
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
