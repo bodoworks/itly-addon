@@ -89,8 +89,70 @@ export function LogTable({ logType }: Props): ReactElement {
                 return String(a.event).localeCompare(String(b.event));
             },
         },
+        ...(logType === LogType.AMPLITUDE
+            ? [
+                  {
+                      title: "Event Properties",
+                      dataIndex: "properties",
+                      width: "20%",
+                      render(args: Log["properties"]): ReactElement {
+                          if (
+                              !args ||
+                              isEmpty(args) ||
+                              isEmpty(args.event_properties)
+                          ) {
+                              return <span />;
+                          }
+
+                          return (
+                              <ReactJson
+                                  src={
+                                      args.event_properties as Record<
+                                          string,
+                                          unknown
+                                      >
+                                  }
+                                  theme="rjv-default"
+                                  displayDataTypes={false}
+                                  collapsed
+                                  name={false}
+                              />
+                          );
+                      },
+                  },
+                  {
+                      title: "User Properties",
+                      dataIndex: "properties",
+                      width: "20%",
+                      render(args: Log["properties"]): ReactElement {
+                          if (
+                              !args ||
+                              isEmpty(args) ||
+                              isEmpty(args.user_properties)
+                          ) {
+                              return <span />;
+                          }
+
+                          return (
+                              <ReactJson
+                                  src={
+                                      args.user_properties as Record<
+                                          string,
+                                          unknown
+                                      >
+                                  }
+                                  theme="rjv-default"
+                                  displayDataTypes={false}
+                                  collapsed
+                                  name={false}
+                              />
+                          );
+                      },
+                  },
+              ]
+            : []),
         {
-            title: "Properties",
+            title: "Raw Properties",
             dataIndex: "properties",
             width: "35%",
             render(args: Log["properties"]): ReactElement {
