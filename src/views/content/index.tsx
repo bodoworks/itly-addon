@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { Store } from "webext-redux";
-import { browser } from "webextension-polyfill-ts";
 
 import { App } from "./app";
 
@@ -29,12 +28,3 @@ store.ready().then((): void => {
         document.getElementById(ITLY_CONTAINER_ID)
     );
 });
-
-(async (): Promise<void> => {
-    await browser.runtime.sendMessage({
-        type: "FOO",
-        payload: {
-            bar: "bar",
-        },
-    });
-})();

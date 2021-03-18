@@ -10,6 +10,7 @@ export function addLogs(
 ): EventActionTypes {
     browser.tabs.sendMessage(tabId, {
         type: MESSAGE_NEW_LOGS,
+        logType,
         logs,
     });
 
