@@ -1,14 +1,20 @@
 import "react-toastify/dist/ReactToastify.css";
 
 import capitalize from "lodash/capitalize";
-import React, { ReactElement } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { browser } from "webextension-polyfill-ts";
 
 import { LogType } from "../../redux/types";
 import { Log, MESSAGE_NEW_LOGS } from "../../types";
+import { useSettings } from "../options/hooks";
 
-export function App(): ReactElement {
+export function App(): ReactNode {
+    const { data: settings } = useSettings();
+    return settings?.showToasts ? <Toasts /> : null;
+}
+
+function Toasts(): ReactElement {
     browser.runtime.onMessage.addListener((request) => {
         const { logType, type, logs } = request;
         if (type === MESSAGE_NEW_LOGS) {

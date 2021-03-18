@@ -28,11 +28,10 @@ npm run start # This will continuously watch the repo for changes
 1. Open Chrome and navigate to [Extensions](chrome://extensions/)
 2. Click on 'Load unpacked' and navigate to the `./dist` folder
 
-You should now see an additional panel inside Chrome devtools.
+You should now see an additional panel inside devtools.
 
-**Note:** The `background` script does not reload automatically. If you make any changes that's used by
-`src/views/background/*` you'll need to hit the 🔄 button next to the extension listed in
-[Extensions](chrome://extensions/).
+**Note:** The `background` and `content` scripts do not reload automatically. You'll need to hit the 🔄 button next to
+the extension listed in [Extensions](chrome://extensions/) to trigger a reload.
 
 ## 🧪 Testing
 

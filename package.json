@@ -80,7 +80,7 @@
     "webextension-polyfill-ts": "^0.25.0"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,md}": "eslint --cache --fix"
+    "*.{ts,tsx,js}": "eslint --cache --fix"
   },
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
