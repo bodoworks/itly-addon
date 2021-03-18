@@ -2,7 +2,6 @@
   "name": "itly-addon",
   "version": "1.0.0",
   "description": "Log analyzer",
-  "main": "index.js",
   "scripts": {
     "build": "ts-node build.ts --production",
     "ci": "npm-run-all --parallel lint tsc test",
