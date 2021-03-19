@@ -7,6 +7,7 @@ import { version as PACKAGE_VERSION } from "../package.json";
 import manifestJson from "../public/manifest.json";
 
 const OUTPUT_FOLDER = "../dist";
+export const OUTPUT_ZIP_FILE = `${OUTPUT_FOLDER}/itly-addon-${PACKAGE_VERSION}.zip`;
 
 const args = yargs(process.argv)
     .option("production", {
@@ -74,8 +75,7 @@ async function buildEntryPoint(
 
     await builds;
 
-    const zipFilename = `${OUTPUT_FOLDER}/itly-addon-${PACKAGE_VERSION}.zip`;
     const zip = new AdmZip();
     zip.addLocalFolder(OUTPUT_FOLDER);
-    zip.writeZip(zipFilename);
+    zip.writeZip(OUTPUT_ZIP_FILE);
 })();
