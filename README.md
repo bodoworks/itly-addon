@@ -1,5 +1,7 @@
 # Itly Addon
 
+https://github.com/johnjiang/itly-addon/actions/workflows/nodejs.yml/badge.svg
+
 # Developer setup
 
 ## 🍺 Prerequisites
