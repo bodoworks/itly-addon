@@ -1,7 +1,7 @@
 import "react-toastify/dist/ReactToastify.css";
 
 import capitalize from "lodash/capitalize";
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { browser } from "webextension-polyfill-ts";
 
@@ -9,7 +9,7 @@ import { LogType } from "../../redux/types";
 import { Log, MESSAGE_NEW_LOGS } from "../../types";
 import { useSettings } from "../options/hooks";
 
-export function App(): ReactNode {
+export function App(): ReactElement | null {
     const { data: settings } = useSettings();
     return settings?.showToasts ? <Toasts /> : null;
 }
