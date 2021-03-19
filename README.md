@@ -38,16 +38,9 @@ the extension listed in [Extensions](chrome://extensions/) to trigger a reload.
 ## 🧪 Testing
 
 ```
-npm run test
-npm run lint
+npm run ci # linting, testing, and typechecking
 ```
 
 ## 🚀 Building and deploy
 
-Remember to bump up `version` inside `package.json`.
-
-```
-npm run build
-```
-
-Upload the `*.zip` file to Chrome Extension Store
+TBD
