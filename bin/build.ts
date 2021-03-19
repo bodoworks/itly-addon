@@ -58,9 +58,9 @@ async function buildEntryPoint(
             onRebuild(error, result): void {
                 if (error) {
                     console.error(`Watch build failed: ${outfile}`, error);
+                } else {
+                    console.log(`Watch build succeeded: ${outfile}`, result);
                 }
-
-                console.error(`Watch build succeeded: ${outfile}`, result);
             },
         },
     });
