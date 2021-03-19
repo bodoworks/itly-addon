@@ -1,6 +1,6 @@
 # Itly Addon
 
-https://github.com/johnjiang/itly-addon/actions/workflows/nodejs.yml/badge.svg
+![Build and Test](https://github.com/johnjiang/itly-addon/actions/workflows/nodejs.yml/badge.svg)
 
 # Developer setup
 
