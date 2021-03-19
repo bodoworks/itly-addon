@@ -6,7 +6,7 @@ import yargs from "yargs";
 import { version as PACKAGE_VERSION } from "../package.json";
 import manifestJson from "../public/manifest.json";
 
-const OUTPUT_FOLDER = "../dist";
+const OUTPUT_FOLDER = "dist";
 export const OUTPUT_ZIP_FILE = `${OUTPUT_FOLDER}/itly-addon-${PACKAGE_VERSION}.zip`;
 
 const args = yargs(process.argv)
