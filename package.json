@@ -9,6 +9,7 @@
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
+    "publish": "ts-node ./bin/publish.ts",
     "start": "ts-node ./bin/build.ts --watch",
     "test": "jest --passWithNoTests",
     "tsc": "tsc --noEmit"
