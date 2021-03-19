@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Log analyzer",
   "scripts": {
-    "build": "ts-node build.ts --production",
+    "build": "ts-node ./bin/build.ts --production",
     "ci": "npm-run-all --parallel lint tsc test",
     "lint": "eslint --ext .ts,tsx,js src/",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
-    "start": "ts-node build.ts --watch",
+    "start": "ts-node ./bin/build.ts --watch",
     "test": "jest --passWithNoTests",
     "tsc": "tsc --noEmit"
   },

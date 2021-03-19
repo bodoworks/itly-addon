@@ -3,10 +3,10 @@ import { BuildResult, build } from "esbuild";
 import fs from "fs-extra";
 import yargs from "yargs";
 
-import { version as PACKAGE_VERSION } from "./package.json";
-import manifestJson from "./public/manifest.json";
+import { version as PACKAGE_VERSION } from "../package.json";
+import manifestJson from "../public/manifest.json";
 
-const OUTPUT_FOLDER = "./dist";
+const OUTPUT_FOLDER = "../dist";
 
 const args = yargs(process.argv)
     .option("production", {
