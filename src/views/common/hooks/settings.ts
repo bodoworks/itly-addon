@@ -7,9 +7,13 @@ import {
 } from "react-query";
 import { browser } from "webextension-polyfill-ts";
 
-import { SETTINGS_KEY, Settings } from "../../../services/storage";
-
 const QUERY_SETTINGS = "QUERY_SETTINGS";
+const SETTINGS_KEY = "settings";
+
+interface Settings {
+    showToasts?: boolean;
+    itlyApiKey?: string;
+}
 
 export function useSettings(): UseQueryResult<Settings, Error> {
     return useQuery(QUERY_SETTINGS, async () => {

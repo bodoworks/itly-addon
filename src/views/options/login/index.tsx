@@ -1,7 +1,7 @@
 import { Form, Input, PageHeader, message } from "antd";
 import React, { ChangeEvent, ReactElement } from "react";
 
-import { useSettings, useUpdateSettings } from "../hooks";
+import { useSettings, useUpdateSettings } from "../../common/hooks/settings";
 
 export function LoginPage(): ReactElement {
     const { isLoading, data: settings } = useSettings();

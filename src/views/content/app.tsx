@@ -7,7 +7,7 @@ import { browser } from "webextension-polyfill-ts";
 
 import { LogType } from "../../redux/types";
 import { Log, MESSAGE_NEW_LOGS } from "../../types";
-import { useSettings } from "../options/hooks";
+import { useSettings } from "../common/hooks/settings";
 
 export function App(): ReactElement | null {
     const { data: settings } = useSettings();

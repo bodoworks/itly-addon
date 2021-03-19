@@ -1,7 +1,7 @@
 import { PageHeader, Switch, message } from "antd";
 import React, { ReactElement } from "react";
 
-import { useSettings, useUpdateSettings } from "../hooks";
+import { useSettings, useUpdateSettings } from "../../common/hooks/settings";
 
 export function SettingsPage(): ReactElement {
     const { isLoading, data: settings } = useSettings();
