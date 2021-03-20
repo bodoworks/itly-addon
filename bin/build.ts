@@ -74,17 +74,19 @@ async function buildEntryPoint(
         "dev-tools": "./src/views/dev-tools/index.ts",
         options: "./src/views/options/index.tsx",
     };
-    const builds = Promise.all(
+
+    await Promise.all(
         Object.entries(entryPoints).map(([bundleName, entryPoint]) => {
             console.log(`Building: ${bundleName}`);
             return buildEntryPoint(entryPoint, `bundle_${bundleName}.js`);
         })
     );
-
-    await builds;
     console.log("All done.");
 
-    const zip = new AdmZip();
-    zip.addLocalFolder(OUTPUT_FOLDER);
-    zip.writeZip(OUTPUT_ZIP_FILE);
+    if (!args.watch) {
+        const zip = new AdmZip();
+        zip.addLocalFolder(OUTPUT_FOLDER);
+        zip.writeZip(OUTPUT_ZIP_FILE);
+        console.log(`Built zip: ${OUTPUT_ZIP_FILE}`);
+    }
 })();
