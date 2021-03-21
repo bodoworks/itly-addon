@@ -9,7 +9,7 @@ import manifestJson from "../public/manifest.json";
 const OUTPUT_FOLDER = "dist";
 export const OUTPUT_ZIP_FILE = `${OUTPUT_FOLDER}/itly-addon-${PACKAGE_VERSION}.zip`;
 
-const args = yargs(process.argv)
+const { argv } = yargs(process.argv)
     .option("production", {
         type: "boolean",
         description: "Build in production mode",
@@ -17,7 +17,7 @@ const args = yargs(process.argv)
     .option("watch", {
         type: "boolean",
         description: "Watch mode",
-    }).argv;
+    });
 
 // clean folder
 fs.emptyDirSync(OUTPUT_FOLDER);
@@ -31,7 +31,7 @@ fs.writeFileSync(
     JSON.stringify(manifestJson, null, 2)
 );
 
-const mode = args.production ? "production" : "development";
+const mode = argv.production ? "production" : "development";
 const IS_PROD = mode === "production";
 
 async function buildEntryPoint(
@@ -54,7 +54,7 @@ async function buildEntryPoint(
         publicPath: "/",
         sourcemap: true,
         target: "es2020",
-        watch: args.watch && {
+        watch: argv.watch && {
             onRebuild(error, result): void {
                 if (error) {
                     console.error(`Watch build failed: ${outfile}`, error);
@@ -83,7 +83,7 @@ async function buildEntryPoint(
     );
     console.log("All done.");
 
-    if (!args.watch) {
+    if (!argv.watch) {
         const zip = new AdmZip();
         zip.addLocalFolder(OUTPUT_FOLDER);
         zip.writeZip(OUTPUT_ZIP_FILE);
