@@ -96,18 +96,15 @@ export function LogTable({ logType }: Props): ReactElement {
                       dataIndex: "properties",
                       width: "20%",
                       render(args: Log["properties"]): ReactElement {
-                          if (
-                              !args ||
-                              isEmpty(args) ||
-                              isEmpty(args.event_properties)
-                          ) {
+                          const { event_properties } = args ?? {};
+                          if (isEmpty(event_properties)) {
                               return <span />;
                           }
 
                           return (
                               <ReactJson
                                   src={
-                                      args.event_properties as Record<
+                                      event_properties as Record<
                                           string,
                                           unknown
                                       >
@@ -125,21 +122,15 @@ export function LogTable({ logType }: Props): ReactElement {
                       dataIndex: "properties",
                       width: "20%",
                       render(args: Log["properties"]): ReactElement {
-                          if (
-                              !args ||
-                              isEmpty(args) ||
-                              isEmpty(args.user_properties)
-                          ) {
+                          const { user_properties } = args ?? {};
+                          if (isEmpty(user_properties)) {
                               return <span />;
                           }
 
                           return (
                               <ReactJson
                                   src={
-                                      args.user_properties as Record<
-                                          string,
-                                          unknown
-                                      >
+                                      user_properties as Record<string, unknown>
                                   }
                                   theme="rjv-default"
                                   displayDataTypes={false}
