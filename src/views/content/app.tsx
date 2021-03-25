@@ -1,7 +1,7 @@
 import "react-toastify/dist/ReactToastify.css";
 
 import capitalize from "lodash/capitalize";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { browser } from "webextension-polyfill-ts";
 
@@ -15,30 +15,35 @@ export function App(): ReactElement | null {
 }
 
 function Toasts(): ReactElement {
-    browser.runtime.onMessage.addListener((request) => {
-        const { logType, type, logs } = request;
-        if (type === MESSAGE_NEW_LOGS) {
-            logs.forEach((log: Log) => {
-                let event = log.event;
-                if (logType === LogType.SEGMENT) {
-                    event = log.segmentType as string;
-                    if (log.event) {
-                        event += ` - ${log.event}`;
+    useEffect(() => {
+        browser.runtime.onMessage.addListener((request) => {
+            const { logType, type, logs } = request;
+            if (type === MESSAGE_NEW_LOGS) {
+                logs.forEach((log: Log) => {
+                    let event = log.event;
+                    if (logType === LogType.SEGMENT) {
+                        event = log.segmentType as string;
+                        if (log.event) {
+                            event += ` - ${log.event}`;
+                        }
                     }
-                }
 
-                toast.info(`${capitalize(logType.toLowerCase())} - ${event}`, {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: false,
-                    progress: undefined,
+                    toast.info(
+                        `${capitalize(logType.toLowerCase())} - ${event}`,
+                        {
+                            position: "bottom-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: false,
+                            progress: undefined,
+                        }
+                    );
                 });
-            });
-        }
-    });
+            }
+        });
+    }, []);
 
     return <ToastContainer newestOnTop />;
 }
