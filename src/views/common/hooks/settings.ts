@@ -18,7 +18,7 @@ interface Settings {
 export function useSettings(): UseQueryResult<Settings, Error> {
     return useQuery(QUERY_SETTINGS, async () => {
         const results = await browser.storage.sync.get([SETTINGS_KEY]);
-        const settings: Settings = results[SETTINGS_KEY];
+        const settings: Settings = results[SETTINGS_KEY] ?? {};
 
         // TODO: validate that this is actually the shape that we expect
         return settings;
