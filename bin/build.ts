@@ -34,32 +34,35 @@ fs.writeFileSync(
 const mode = argv.production ? "production" : "development";
 const IS_PROD = mode === "production";
 
-async function buildEntryPoint(
-    entryPoint: string,
-    outfile: string
-): Promise<BuildResult> {
+async function buildAddon(): Promise<BuildResult> {
     return build({
         bundle: true,
         define: {
             "process.env.NODE_ENV": JSON.stringify(mode),
             VERSION: JSON.stringify(PACKAGE_VERSION),
         },
-        entryPoints: [entryPoint],
+        entryPoints: {
+            bundle_background: "./src/views/background/index.ts",
+            bundle_content: "./src/views/content/index.tsx",
+            "bundle_dev-panel": "./src/views/dev-panel/index.tsx",
+            "bundle_dev-tools": "./src/views/dev-tools/index.ts",
+            bundle_options: "./src/views/options/index.tsx",
+        },
         inject: ["src/react-shim.ts"],
         loader: {
             ".ts": "ts",
         },
         minify: IS_PROD,
-        outfile: `${OUTPUT_FOLDER}/${outfile}`,
+        outdir: OUTPUT_FOLDER,
         publicPath: "/",
         sourcemap: true,
         target: "es2020",
         watch: argv.watch && {
             onRebuild(error, result): void {
                 if (error) {
-                    console.error(`Watch build failed: ${outfile}`, error);
+                    console.error(`Watch build failed:`, error);
                 } else {
-                    console.log(`Watch build succeeded: ${outfile}`, result);
+                    console.log(`Watch build succeeded:`, result);
                 }
             },
         },
@@ -67,21 +70,11 @@ async function buildEntryPoint(
 }
 
 (async (): Promise<void> => {
-    const entryPoints = {
-        background: "./src/views/background/index.ts",
-        content: "./src/views/content/index.tsx",
-        "dev-panel": "./src/views/dev-panel/index.tsx",
-        "dev-tools": "./src/views/dev-tools/index.ts",
-        options: "./src/views/options/index.tsx",
-    };
-
-    await Promise.all(
-        Object.entries(entryPoints).map(([bundleName, entryPoint]) => {
-            console.log(`Building: ${bundleName}`);
-            return buildEntryPoint(entryPoint, `bundle_${bundleName}.js`);
-        })
-    );
-    console.log("All done.");
+    const start = Date.now();
+    process.stdout.write("Building...");
+    await buildAddon();
+    const end = Date.now();
+    process.stdout.write(`✅ ${end - start}ms\n`);
 
     if (!argv.watch) {
         const zip = new AdmZip();
