@@ -1,5 +1,5 @@
 import AdmZip from "adm-zip";
-import { BuildResult, build } from "esbuild";
+import { build } from "esbuild";
 import fs from "fs-extra";
 import yargs from "yargs";
 
@@ -34,8 +34,11 @@ fs.writeFileSync(
 const mode = argv.production ? "production" : "development";
 const IS_PROD = mode === "production";
 
-async function buildAddon(): Promise<BuildResult> {
-    return build({
+(async (): Promise<void> => {
+    const start = Date.now();
+    process.stdout.write("Building...");
+
+    await build({
         bundle: true,
         define: {
             "process.env.NODE_ENV": JSON.stringify(mode),
@@ -67,12 +70,7 @@ async function buildAddon(): Promise<BuildResult> {
             },
         },
     });
-}
 
-(async (): Promise<void> => {
-    const start = Date.now();
-    process.stdout.write("Building...");
-    await buildAddon();
     const end = Date.now();
     process.stdout.write(`✅ ${end - start}ms\n`);
 
