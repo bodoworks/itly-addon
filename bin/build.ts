@@ -9,32 +9,35 @@ import manifestJson from "../public/manifest.json";
 const OUTPUT_FOLDER = "dist";
 export const OUTPUT_ZIP_FILE = `${OUTPUT_FOLDER}/itly-addon-${PACKAGE_VERSION}.zip`;
 
-const { argv } = yargs(process.argv)
-    .option("production", {
-        type: "boolean",
-        description: "Build in production mode",
-    })
-    .option("watch", {
-        type: "boolean",
-        description: "Watch mode",
-    });
-
-// clean folder
-fs.emptyDirSync(OUTPUT_FOLDER);
-
-// copy over assets
-fs.copySync("./public", OUTPUT_FOLDER);
-
-manifestJson.version = PACKAGE_VERSION;
-fs.writeFileSync(
-    `${OUTPUT_FOLDER}/manifest.json`,
-    JSON.stringify(manifestJson, null, 2)
-);
-
-const mode = argv.production ? "production" : "development";
-const IS_PROD = mode === "production";
-
 (async (): Promise<void> => {
+    const { argv } = yargs(process.argv)
+        .option("production", {
+            type: "boolean",
+            description: "Build in production mode",
+        })
+        .option("watch", {
+            type: "boolean",
+            description: "Watch mode",
+        });
+
+    process.stdout.write("Cleaning...");
+    fs.emptyDirSync(OUTPUT_FOLDER);
+    process.stdout.write(`✅\n`);
+
+    process.stdout.write("Copying assets...");
+    fs.copySync("./public", OUTPUT_FOLDER);
+
+    // rewrite the manifest.json file with the version stored in package.json
+    manifestJson.version = PACKAGE_VERSION;
+    fs.writeFileSync(
+        `${OUTPUT_FOLDER}/manifest.json`,
+        JSON.stringify(manifestJson, null, 2)
+    );
+    process.stdout.write(`✅\n`);
+
+    const mode = argv.production ? "production" : "development";
+    const IS_PROD = mode === "production";
+
     const start = Date.now();
     process.stdout.write("Building...");
 
