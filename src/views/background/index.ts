@@ -88,17 +88,15 @@ browser.webRequest.onBeforeRequest.addListener(
         const formData = getJsonBody(details);
         const rawLogs = JSON.parse(formData.e as string) as AmplitudeLog[];
 
-        const logs = rawLogs.map(
-            (rawLog): Log => {
-                return {
-                    _guid: nanoid(),
-                    tstamp: rawLog.timestamp as number,
-                    domain: details.initiator as string,
-                    event: rawLog.event_type as string,
-                    properties: rawLog,
-                };
-            }
-        );
+        const logs = rawLogs.map((rawLog): Log => {
+            return {
+                _guid: nanoid(),
+                tstamp: rawLog.timestamp as number,
+                domain: details.initiator as string,
+                event: rawLog.event_type as string,
+                properties: rawLog,
+            };
+        });
 
         store.dispatch(addLogs(LogType.AMPLITUDE, logs, details.tabId));
     },

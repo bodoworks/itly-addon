@@ -1,12 +1,11 @@
+import "dotenv/config";
+
 import fs from "fs";
 
-import { config } from "dotenv";
 import fetch from "node-fetch";
 
 import { version } from "../package.json";
 import { OUTPUT_ZIP_FILE } from "./build";
-
-config();
 
 const appId = "<todo>";
 const clientId = "<todo>";
